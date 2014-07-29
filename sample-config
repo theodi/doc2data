@@ -1,11 +1,7 @@
 #  Sample configuration file
-#  Copy to ~/.christmascard and edit
+#  Copy to .config and edit
 
 [general]
 username = user@gmail.com
 password = secret
 doc_name = Christmas Card List
-
-addr1 = The Smith Family
-addr2 = 123 Main Street
-addr3 = Anytown, USA
