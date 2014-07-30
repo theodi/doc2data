@@ -3,5 +3,26 @@
 
 [general]
 username = user@gmail.com
-password = secret
-doc_name = Christmas Card List
+password = password
+doc_name = Exact title of spreadsheet
+csv_file = output.csv
+json_file = output.json
+
+# Specify some metadata for the JSON output
+[dataset_metadata]
+Title = Title of dataset
+URL = http://url-of-dataset-page
+License = CC BY-SA 4.0 International
+License URI = http://creativecommons.org/licenses/by-sa/4.0/
+Publisher = Your organisation or name
+publisher email = foo@bar.org
+
+# Specify some options
+[options]
+# selected_columns: Only output data from the specific columns
+selected_columns = col1_title,col2_title,col3_title,name,email
+
+# Title map, rename the columns in the output
+[title_map]
+col1_title = My new title
+col3_title = Another new title
