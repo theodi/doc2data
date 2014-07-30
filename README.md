@@ -1,10 +1,11 @@
+# doc2data
+
 This is a simple Python utility to automatically convert a google docs spreadsheet into csv and json data. 
 
-To configure:
+Usage
+-----
 
-Create a Google Docs spreadsheet with the following columns:
-
-Then, copy sample-config to .config (with the ".") and edit with your Google username, password, and mailing address.
+Copy sample-config to .config (with the ".") and edit the various options.
 
 Licence
 -------
