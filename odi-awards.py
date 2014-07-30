@@ -83,7 +83,6 @@ for (count, row) in enumerate(rows):
 			data[titles[key]] = ""
 			csv_output.append("")
 
-	print(data)
 	json_output["nominations"].append(data)
 	
 	writer.writerow(csv_output)
