@@ -1,18 +1,20 @@
 #!/usr/bin/env python
 #
-#   odi-awards.py -- Takes content of google spreadsheet and outputs csv and json of select columns only
+#  doc2data.py -- Takes content of google spreadsheet and outputs csv and json.
+#
+#  See sample config for usage and configuration
 #
 #  <davetaz@theodi.org> <phil.lang@theodi.org>
 #  July 2014
 #
-# With thanks to <andy@payne.org> for the reference code, merry christmas!
+#  With thanks to <andy@payne.org> for the reference code, merry christmas!
+#
 
 import gdata.docs
 import gdata.docs.service
 import gdata.spreadsheet.service
 import re, os, os.path
 import ConfigParser
-import StringIO
 import sys
 import csv
 import json
