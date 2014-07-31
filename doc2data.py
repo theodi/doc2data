@@ -39,11 +39,17 @@ for option in options:
 	json_output[option] = c.get('dataset_metadata',option).strip()
 
 output_keys = False
+add_id = False
 try:
 	selected_columns = c.get('options', 'selected_columns').strip()
 	# NOT THE BEST WAY FIXME WITH PROPER CSV PARSING
 	output_keys = selected_columns.split(",")
 except: 
+	pass
+
+try:
+	add_id = c.get('options', 'add_id_column').strip()
+except:
 	pass
 
 try:
@@ -54,6 +60,7 @@ except:
 	pass
 
 titles = False
+array = False
 
 # Connect to Google
 # This is a comment in blue
@@ -91,43 +98,71 @@ def getHeadingsFromConfig(output_keys,titles):
 		return output_keys
 	return False;
 
-def writeTitlesToCSV(titles,writer):
+def writeTitlesToCSV(array,writer):
 	csv_output = []
-	for key in titles: 
-		csv_output.append(titles[key])
+	for titles in array:
+		for key in titles: 
+			csv_output.append(titles[key])
 	
 	writer.writerow(csv_output)
 
-def getTitles(headings,title_map):
-	titles = {}
+def getCSVTitles(headings,title_map,add_id):
+	array = []
+	if add_id:
+		titles = {}
+		titles["id"] = "ID"
+		array.append(titles)
 	for heading in headings:
+		titles = {}
 		try:
 			titles[heading] = title_map[heading]
 		except:
 			titles[heading] = heading
-	return titles
-	
+		array.append(titles);
+	return array
+
+def getTitles(headings,title_map,add_id):
+        titles = {}
+	if add_id:
+		titles["id"] = "ID"
+        for heading in headings:
+                try:
+                        titles[heading] = title_map[heading]
+                except:
+                        titles[heading] = heading
+        return titles	
 
 headings_done = False;
 json_output["rows"] = []
 headings = getHeadingsFromConfig(output_keys,titles)
 if headings:
 	if not titles:
-		titles = getTitles(headings,title_map)
-	writeTitlesToCSV(titles,writer)
+		array = getCSVTitles(headings,title_map,add_id)
+		titles = getTitles(headings,title_map,add_id)
+	writeTitlesToCSV(array,writer)
 	headings_done = True;
+
+record_counter = 1;
 
 for (count, row) in enumerate(rows):
 	if not headings_done:
 		headings = getHeadingsFromRow(row)
-		titles = getTitles(headings,title_map)
-		writeTitlesToCSV(titles,writer)
+		array = getCSVTitles(headings,title_map,add_id)
+		titles = getTitles(headings,title_map,add_id)
+		writeTitlesToCSV(array,writer)
 		output_keys = headings
 		headings_done = True;
 	data = {}
 	csv_output = []
-	for key in row.custom:
-		if row.custom[key].text and key in output_keys:
+	if add_id:
+		csv_output.append(record_counter)
+		data["ID"] = record_counter
+	record_counter += 1
+	for titles in array:
+	    for key in titles:
+		if add_id and key=="id":
+			pass
+		elif row.custom[key].text and key in output_keys:
 			csv_output.append(row.custom[key].text.strip())
 			data[titles[key]] = row.custom[key].text.strip()
 		elif key in output_keys:

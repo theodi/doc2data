@@ -21,6 +21,8 @@ publisher email = foo@bar.org
 [options]
 # selected_columns: Only output data from the specific columns
 selected_columns = col1_title,col2_title,col3_title,name,email
+# add_id_column: Add a sequential numbered ID column to aid linking of data
+add_id_column = True
 
 # Title map, rename the columns in the output
 [title_map]
