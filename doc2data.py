@@ -134,6 +134,7 @@ def getTitles(headings,title_map,add_id):
 
 headings_done = False;
 json_output["rows"] = []
+
 headings = getHeadingsFromConfig(output_keys,titles)
 if headings:
 	if not titles:
@@ -151,7 +152,7 @@ for (count, row) in enumerate(rows):
 		titles = getTitles(headings,title_map,add_id)
 		writeTitlesToCSV(array,writer)
 		output_keys = headings
-		headings_done = True;
+		headings_done = True	
 	data = {}
 	csv_output = []
 	if add_id:
@@ -163,7 +164,7 @@ for (count, row) in enumerate(rows):
 		if add_id and key=="id":
 			pass
 		elif row.custom[key].text and key in output_keys:
-			csv_output.append(row.custom[key].text.strip())
+			csv_output.append(row.custom[key].text.strip().encode("utf-8"))
 			data[titles[key]] = row.custom[key].text.strip()
 		elif key in output_keys:
 			data[titles[key]] = ""
