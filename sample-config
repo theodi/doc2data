@@ -5,6 +5,7 @@
 username = user@gmail.com
 password = password
 doc_name = Exact title of spreadsheet
+doc_id = google_doc_id_from_url
 csv_file = output.csv
 json_file = output.json
 

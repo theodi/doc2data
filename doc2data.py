@@ -12,6 +12,7 @@
 
 import gdata.docs
 import gdata.docs.service
+import gdata.spreadsheets.client
 import gdata.spreadsheet.service
 import re, os, os.path
 import ConfigParser
@@ -31,7 +32,7 @@ if not os.path.isfile(cfile):
 c = ConfigParser.ConfigParser()
 c.read(cfile)
 config = {}
-for i in ('username', 'password', 'doc_name', 'csv_file', 'json_file'):
+for i in ('username', 'password', 'doc_name', 'doc_id', 'csv_file', 'json_file'):
 	config[i] = c.get('general', i).strip()
 
 options = c.options('dataset_metadata')
@@ -79,9 +80,10 @@ writer = csv.writer(ofile, delimiter=',',quotechar='"',quoting=csv.QUOTE_ALL)
 q = gdata.spreadsheet.service.DocumentQuery()
 q['title'] = config['doc_name']
 q['title-exact'] = 'true'
-feed = gd_client.GetSpreadsheetsFeed(query=q)
-assert(feed)
-spreadsheet_id = feed.entry[0].id.text.rsplit('/',1)[1]
+#feed = gd_client.GetSpreadsheetsFeed(query=q)
+#assert(feed)
+#spreadsheet_id = feed.entry[0].id.text.rsplit('/',1)[1]
+spreadsheet_id = config['doc_id'];
 feed = gd_client.GetWorksheetsFeed(spreadsheet_id)
 worksheet_id = feed.entry[0].id.text.rsplit('/',1)[1]
 rows = gd_client.GetListFeed(spreadsheet_id, worksheet_id).entry
